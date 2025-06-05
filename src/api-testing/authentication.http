@@ -1,0 +1,11 @@
+# ****************
+# SESSIONS (Sessões)
+# ****************
+### 1. Autenticação (login)
+POST http://localhost:3333/sessions HTTP/1.1
+content-type: application/json
+
+{
+    "email": "fulano.customer@email.com",
+    "password": "123abc"
+}

@@ -1,0 +1,58 @@
+# ****************
+# DELIVERIES (Entregas)
+# ****************
+### 1. Autenticação (login)
+# @name login
+POST http://localhost:3333/sessions HTTP/1.1
+content-type: application/json
+
+{
+    "email": "sicrano.sale@email.com",
+    "password": "123abc"
+}
+
+### 2. Recupera o token de autenticação
+@token = {{login.response.body.token}}
+
+### Cria produto (operação que necessita autenticação)
+
+POST http://localhost:3333/deliveries HTTP/1.1
+Authorization: Bearer {{token}}
+content-type: application/json
+
+{
+    "user_id": "f0abbc21-0afb-4b39-8f8c-1522d7b7afd0",
+    "description": "aproveita passa na farmácia"
+}
+
+### # # # # # # # # # # # # # # # # # #
+GET http://localhost:3333/deliveries HTTP/1.1
+Authorization: Bearer {{token}}
+content-type: application/json
+
+### ATUALIZA STATUS de uma ENTREGA
+
+PATCH http://localhost:3333/deliveries/2bba7fef-7fa4-4f59-a9cb-0f7310d42eb3/status HTTP/1.1
+Authorization: Bearer {{token}}
+content-type: application/json
+
+{
+    "status": "shipped"
+}
+
+### INCLUI um LOG para uma entrega
+
+POST http://localhost:3333/delivery-log HTTP/1.1
+Authorization: Bearer {{token}}
+content-type: application/json
+
+{
+    "delivery_id": "2bba7fef-7fa4-4f59-a9cb-0f7310d42eb3",
+    "description": "pagando compra na farmácia"
+}
+
+### VISUALIZA o LOG de uma entrega
+
+GET http://localhost:3333/delivery-log/2bba7fef-7fa4-4f59-a9cb-0f7310d42eb3 HTTP/1.1
+Authorization: Bearer {{token}}
+content-type: application/json
